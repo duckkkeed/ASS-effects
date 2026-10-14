@@ -14,7 +14,8 @@ Last Style Storage: Default
 Video File: ?dummy:23.976000:40000:1920:1080:0:0:0:
 Video AR Value: 1.777778
 Video Zoom Percent: 0.437500
-Active Line: 2
+Active Line: 4
+Video Position: 126
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
@@ -35,9 +36,11 @@ Style: Default,极影毁片和圆,80,&H00FFFFFF,&H000000FF,&H00000000,&H00000000
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Comment: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,code,function get_frame_time()    return _G.aegisub.ms_from_frame(101) and (_G.aegisub.ms_from_frame(101) - _G.aegisub.ms_from_frame(1)) / 100 or 1001 / 24 end
+Comment: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,code,function frame_alpha_tag(frame_i, total_time, fdur, mode)     if total_time <= 0 or fdur <= 0 then         return "\\alpha&H00&"     end     local total_frames = math.floor(total_time / fdur)     if total_frames <= 1 then         return "\\alpha&H00&"     end     local t = frame_i / (total_frames - 1)     if t < 0 then t = 0 end     if t > 1 then t = 1 end     local a     if mode == 1 then         a = 255 * (1 - t)     else         a = 255 * t     end     return string.format("\\alpha&H%02X&", math.floor(a + 0.5)) end
 Comment: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,code,function random_rectangle(l_min,l_max,h_min,h_max,clockwise)    h_min = h_min or l_min    h_max= h_max or l_max   clockwise = clockwise or 0   local S = "m %.1f %.1f l %.1f %.1f l %.1f %.1f l %.1f %.1f "  local a = math.random(l_min,l_max)    local b = math.random(h_min,h_max)    if clockwise == 0 then       return string.format(S,-a/2,-b/2,a/2,-b/2,a/2,b/2,-a/2,b/2)    elseif clockwise == 1 then        return string.format(S,-a/2,-b/2,-a/2,b/2,a/2,b/2,a/2,-b/2)    end end
 Comment: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,code,shape=random_rectangle(15,20,15,20)
-Comment: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,template syl noblank,!maxloop(math.ceil($ldur/_G.toolbox.get_frame_time()))!!retime("preline",(j-1)/maxj*$ldur,j/maxj*$ldur)!{!_G.toolbox.frame_alpha_tag((j-1),$ldur,_G.toolbox.get_frame_time())!\pos($sx,$sy)\!_G.toolbox.frame_blur_tag((j-1), $ldur, _G.toolbox.get_frame_time(), 0,10)!\clip(!_G.Yutils.shape.move(shape,$center+math.random(-30,30),$middle+math.random(-30,30))!!_G.Yutils.shape.move(shape,$center+math.random(-30,30),$middle+math.random(-30,30))!\bord0\shad0)}
+Comment: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,template syl noblank,!maxloop(math.ceil($ldur/_G.toolbox.get_frame_time()))!!retime("preline",(j-1)/maxj*$ldur,j/maxj*$ldur)!{!frame_alpha_tag((j-1),$ldur,_G.toolbox.get_frame_time())!\pos($sx,$sy)\!_G.toolbox.frame_blur_tag((j-1), $ldur, get_frame_time(), 0,10)!\clip(!_G.Yutils.shape.move(shape,$center+math.random(-30,30),$middle+math.random(-30,30))!!_G.Yutils.shape.move(shape,$center+math.random(-30,30),$middle+math.random(-30,30))!\bord0\shad0)}
 Comment: 0,0:00:00.00,0:00:05.00,Default1,,0,0,0,template line,{\fad(500,0)\move(!$left-100!,$middle,$center,$middle,0,500)}
 Comment: 0,0:00:00.00,0:00:02.02,Default1,,0,0,0,karaoke,这是一个示例字幕
 Comment: 0,0:00:02.02,0:00:05.00,Default,,0,0,0,karaoke,{\kf37}这{\kf37}是{\kf37}一{\kf37}个{\kf37}示{\kf37}例{\kf37}字{\kf37}幕
