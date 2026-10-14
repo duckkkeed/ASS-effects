@@ -1,0 +1,20 @@
+# Aegisub
+*.ass.autosave
+*.ass~
+*.ass.bak
+*.txt.bak
+*.ORIG
+*.bak
+
+# 依赖（请按 README 自行安装，不要提交）
+automation/
+Yutils.lua
+VSFilterMod.dll
+*.dll
+
+# 操作系统 / 编辑器
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
